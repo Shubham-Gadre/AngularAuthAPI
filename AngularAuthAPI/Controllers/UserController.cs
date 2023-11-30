@@ -1,6 +1,7 @@
 ﻿using AngularAuthAPI.Context;
 using AngularAuthAPI.Helpers;
 using AngularAuthAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -136,10 +137,12 @@ namespace AngularAuthAPI.Controllers
 
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<User>> GetAllUsers()
         {
-            return Ok(await _appDbContext.Users.ToListAsync());
+            var data= await _appDbContext.Users.ToListAsync();
+            return Ok(data);
         }
     }
 }
